@@ -8,7 +8,7 @@
 #include <string>
 using namespace std;
 
-enum Path { CORRIDOR, CELL, YARD, RESTROOM, TOWER, FOUNTAIN, GATE, RUFT };
+enum Path { CORRIDOR, CELL, YARD, RESTROOM, TOWER, GATE, ROOF, OUTSIDE };
 
 vector<string> Txt_split(string& str);
 string Txt_to_low(string str);

@@ -1,4 +1,9 @@
 #include "Global.h"
+#include "Entity.h"
+#include "Player.h"
+#include "Room.h"
+#include "Exit.h"
+#include "Enemy.h"
 
 #define INVENTORY "inventory"
 #define LOOK "look" 
@@ -13,21 +18,38 @@
 #define QUIT "quit"
 #define MENU "menu"
 #define HELP "help"
+#define PLAY "play"
+#define P_01 "1"
+#define HOW PLAY "how"
+#define INFO_02 "2"
+#define INFORMATION "information"
+#define INFO_03 "3"
+#define ACHIEVEMENTS "achivements"
+#define ACHI_04 "0"
+#define EXIT_05 "5"
 
-class World {
+class World
+{
 
 public:
 	World();
 	~World();
 
 	void Play();
+	void MenuOn();
 	void Command_input(const vector<string>& words);
 	bool FinishGame() const;
+	bool MenuStatus() const;
+	void SetMenu(bool status);
+	void Command_menu(const vector<string>& words);
 
 private:
 
 	void Command_action(const vector<string>& words);
-	void Command_menu(int menu_op);
-	void Help() const;
+	void WaitingMenu();
+	string ExitName(Room* room) const;
+	Player* player;
+	vector<Entity*> entity;
 	bool gamefinished;
+	bool menu_status = true;
 };
