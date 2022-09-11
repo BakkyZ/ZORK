@@ -1,7 +1,0 @@
-﻿  Global.cpp
-  main.cpp
-  Menu.cpp
-  World.cpp
-  Generando código...
-E:\PROYECTOS\GITHUB\ZORK\Global.cpp(49): warning C4715: 'NamePath': no todas las rutas de acceso de control devuelven un valor
-  ZORK.vcxproj -> E:\PROYECTOS\GITHUB\ZORK\x64\Debug\ZORK.exe
