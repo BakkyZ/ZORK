@@ -1,11 +1,10 @@
 #pragma once
 #include "Global.h"
 
-enum EntityType { PLAYER, EXIT, ROOM, ITEM, ENEMY, MENU };
+enum class EntityType { PLAYER, EXIT, ROOM, ITEM, ENEMY, ACHIEVEMENT };
 
 class Entity
 {
-
 public:
 	explicit Entity(EntityType type, string name, string description);
 	virtual ~Entity();
@@ -19,6 +18,7 @@ public:
 	virtual void Look();
 	void Insert(Entity* entity);
 	void Remove(Entity* entity);
+	int ShowArchive(list<Entity*>& entities, EntityType type);
 	int Show(list<Entity*>& entities, EntityType type);
 
 	list<Entity*> content;
@@ -32,9 +32,10 @@ public:
 	{
 		return !operator==(e);
 	}
-
+	
 protected:
 	EntityType type;
 	string name;
 	string description;
+
 };

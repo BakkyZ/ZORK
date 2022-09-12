@@ -8,7 +8,6 @@ vector<string> Txt_split(string& str)
 
 	if (!str.empty())
 	{
-
 		while ((a = str.find(" ")) != string::npos)
 		{
 			txt_02 = str.substr(0, a);
@@ -42,35 +41,34 @@ string NamePath(const Path& dir)
 
 	switch (dir)
 	{
-	case CELL:
+	case Path::CELL:
 		place = "cell";
 		break;
-	case CORRIDOR:
+	case Path::CORRIDOR:
 		place = "corridor";
 		break;
-	case YARD:
+	case Path::YARD:
 		place = "yard";
 		break;
-	case TOWER:
+	case Path::TOWER:
 		place = "tower";
 		break;
-	case GATE:
+	case Path::GATE:
 		place = "gate";
 		break;
-	case RESTROOM:
+	case Path::RESTROOM:
 		place = "restroom";
 		break;
-	case ROOF:
-		place = "roof";
+	case Path::ARMERY:
+		place = "armery";
 		break;
-	case OUTSIDE:
+	case Path::OUTSIDE:
 		place = "outside";
 		break;
 	default:
 		break;
-
-		return place;
 	}
+	return place;
 }
 
 Path* SetPath(const string& str)
@@ -101,9 +99,9 @@ Path* SetPath(const string& str)
 	{
 		place = new Path(Path::TOWER);
 	}
-	else if (str.compare("roof") == 0)
+	else if (str.compare("armery") == 0)
 	{
-		place = new Path(Path::ROOF);
+		place = new Path(Path::ARMERY);
 	}
 	else if (str.compare("outside") == 0)
 	{
@@ -117,4 +115,5 @@ bool IsPath(const string& str)
 {
 	return SetPath(str) != nullptr;
 }
+
 

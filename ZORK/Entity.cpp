@@ -66,6 +66,20 @@ void Entity::Remove(Entity* entity)
 	content.remove(entity);
 }
 
+int Entity::ShowArchive(list<Entity*>& entities, EntityType type)
+{
+	int count = 0;
+	for (Entity* x : entities)
+	{
+		if (x != nullptr && type == x->GetType())
+		{
+			string itemName = x->GetName();
+			cout << "\t- " << itemName << "    -\t" << x->GetDescription() << endl;
+			count++;
+		}
+	}
+	return count;
+}
 int Entity::Show(list<Entity*>& entities, EntityType type) 
 {
 	int count = 0;

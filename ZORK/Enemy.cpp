@@ -6,11 +6,15 @@ void Enemy::Attack()
 	if (GetName() != " ") 
 	{
 		life--;
-		cout << "You hit the " << GetName() << "! " << "It has " << life << " lives left.";
+		cout << "\tYou hit the " << GetName() << "! " << "It has " << life << " lives left.";
 	}
 }
 
 bool Enemy::IsDead() const 
 {
-	return life == 0;
+	if (life <= 0) 
+	{
+		return true;
+	}
+	return false;
 }

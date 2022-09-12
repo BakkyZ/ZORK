@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 
-enum class ItemType { DEF, KEY, WEAPON, ACHIVEMENT };
+enum class ItemType { DEF, KEY, WEAPON, ACHIVEMENT, BULLET };
 
 class Item : public Entity 
 {
@@ -12,7 +12,6 @@ public:
 	{
 		this->itemType = itemType;
 	}
-
 	ItemType GetItemType() const;
 
 private:

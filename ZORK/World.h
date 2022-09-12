@@ -4,6 +4,7 @@
 #include "Room.h"
 #include "Exit.h"
 #include "Enemy.h"
+#include "Achievements.h"
 
 #define INVENTORY "inventory"
 #define LOOK "look" 
@@ -14,6 +15,7 @@
 #define UNEQUIP "unequip"
 #define ATTACK "attack"
 #define OPEN "open"
+#define INSERT "insert"
 #define EXIT "exit"
 #define QUIT "quit"
 #define MENU "menu"
@@ -25,7 +27,7 @@
 #define INFORMATION "information"
 #define INFO_03 "3"
 #define ACHIEVEMENTS "achivements"
-#define ACHI_04 "0"
+#define ACHI_04 "4"
 #define EXIT_05 "5"
 
 class World
@@ -39,12 +41,12 @@ public:
 	void MenuOn();
 	void Command_input(const vector<string>& words);
 	bool FinishGame() const;
+	void SetFinishGame(bool status);
 	bool MenuStatus() const;
 	void SetMenu(bool status);
 	void Command_menu(const vector<string>& words);
 
 private:
-
 	void Command_action(const vector<string>& words);
 	void WaitingMenu();
 	string ExitName(Room* room) const;

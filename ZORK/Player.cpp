@@ -1,20 +1,20 @@
 #include "Player.h"
 
-void Player::DescribePath() 
+void Player::DescribePath()
 {
-	cout << "\n\t" << location->GetName() << "\n\n\t";
+	cout << "\n\t" << location->GetName() << "\n\t";
 	GetLocation()->Look();
 	cout << "\n\n\tYou can go to: \n";
 	Show(GetLocation()->content, EntityType::EXIT);
-	cout << "\tItems here: \n";
+	cout << "\n\tItems here: \n";
 	if (Show(GetLocation()->content, EntityType::ITEM) == 0)
 	{
-		cout << "\tNo items.";
+		cout << "\tNo items.\n";
 	}
-	cout << "\tEnemies in the room: \n";
+	cout << "\n\tEnemies in the room: \n";
 	if (Show(GetLocation()->content, EntityType::ENEMY) == 0)
 	{
-		cout << "\tNo enemy here. \n";
+		cout << "\tNo enemy here.";
 	}
 }
 
@@ -39,7 +39,6 @@ void Player::SetHoldingItem(Item* item)
 
 void Player::Look(const string& str) 
 {
-
 	bool looked = false;
 
 	if ("me" == str) 
@@ -64,7 +63,6 @@ void Player::Look(const string& str)
 		}
 	}
 
-
 	if (!looked) 
 	{
 		string entityName;
@@ -88,7 +86,6 @@ void Player::Look(const string& str)
 		}
 	}
 
-
 	if (!looked) 
 	{
 		Item* item = GetEntityName<Item>(str, content, EntityType::ITEM);
@@ -99,7 +96,6 @@ void Player::Look(const string& str)
 			looked = true;
 		}
 	}
-
 
 	if (!looked) 
 	{
@@ -116,12 +112,10 @@ void Player::Look(const string& str)
 	{
 		cerr << "\tYou see nothing " << str << ".";
 	}
-
 }
 
 void Player::Go(const string& str)
 {
-
 	bool moved = false;
 
 	Exit* exit = ExitPath(str);
@@ -129,7 +123,7 @@ void Player::Go(const string& str)
 	{
 		if (exit->IsLocked()) 
 		{
-			cout << str << " is locked.";
+			cout << "\t" << str << " is locked.";
 		}
 		else 
 		{
@@ -145,12 +139,10 @@ void Player::Go(const string& str)
 	{
 		cout << "\tYou can't move to " << str << ".";
 	}
-
 }
 
 void Player::Take(const string& str) 
 {
-
 	Item* item = GetEntityName<Item>(str, location->content, EntityType::ITEM);
 
 	if (item == nullptr) 
@@ -163,8 +155,31 @@ void Player::Take(const string& str)
 		location->content.remove(item);
 		cout << "\tYou take " << str << ".";
 	}
-		
 }
+void Player::GetAchievement()
+{
+	Achievement* archive = nullptr;
+
+	for (Entity* e : location->content)
+	{
+		if (e != nullptr && e->GetType() == EntityType::ACHIEVEMENT) 
+		{
+			archive = (Achievement*)e;
+			break;
+		}
+	}
+	content.push_back(archive);
+	location->content.remove(archive);
+}
+
+void Player::ShowAchievements()
+{
+	if (ShowArchive(content, EntityType::ACHIEVEMENT) == 0)
+	{
+		cout << "\n\n\tYou  dont any Achievement yet.";
+	}
+}
+
 
 void Player::Drop(const string& str) 
 {
@@ -173,11 +188,10 @@ void Player::Drop(const string& str)
 
 	if (item == nullptr) 
 	{
-		cout << "\n\tYou can't drop " << str << ".";
+		cout << "\tYou can't drop " << str << ".";
 	}
 	else 
 	{
-
 		if (GetHoldingItem() == item) 
 		{
 			Unequip(str);
@@ -194,7 +208,7 @@ void Player::Drop(const string& str)
 		{
 			content.remove(child);
 			location->content.push_back(child);
-			cout << "\tYou dropped " << child->GetName() << ".";
+			cout << "\tYou dropped23 " << child->GetName() << ".";
 		}
 
 		item->content.clear();
@@ -202,12 +216,10 @@ void Player::Drop(const string& str)
 		location->content.push_back(item);
 		cout << "\tYou dropped " << str << ".";
 	}
-
 }
 
 void Player::Equip(const string& str) 
 {
-
 	Item* item = GetEntityName<Item>(str, content, EntityType::ITEM);
 
 	if (item == nullptr) {
@@ -215,16 +227,16 @@ void Player::Equip(const string& str)
 	}
 	else {
 		if (GetHoldingItem() != nullptr)
-			cout << "\tChanged " << GetHoldingItem()->GetName() << " for " << item->GetName() << ".";
+		{
+			cout << "\tChanged " << GetHoldingItem()->GetName() << " for " << item->GetName() << ".\n";
+		}
 		SetHoldingItem(item);
 		cout << "\tEquipped " << item->GetName() << ".";
 	}
-
 }
 
 void Player::Unequip(const string& str) 
 {
-
 	Item* item = GetEntityName<Item>(str, content, EntityType::ITEM);
 
 	if (item == nullptr) 
@@ -243,94 +255,115 @@ void Player::Unequip(const string& str)
 			cout << "\tYou not holding " << item->GetName() << ".";
 		}
 	}
-
 }
 
-void Player::Attack(const string& str) 
+bool Player::Attack(const string& str)
 {
-
 	Enemy* enemy = GetEnemyFromCurrentRoom();
 
-	if (enemy == nullptr) 
+	if (enemy == nullptr)
 	{
-		cout << "\n\tNobody is in this room.";
+		cout << "\tNobody is in this room.";
 	}
 	else
+	{
+		Item* weapon = GetTypeItem(ItemType::WEAPON);
+		if (weapon == nullptr || weapon != GetHoldingItem())
 		{
-			Item* weapon = GetTypeItem(ItemType::WEAPON);
-
-			if (weapon == nullptr)
+			cout << "\tYou don't have a weapon to attack. Equip one!";
+		}
+		else
+		{
+			for (Entity* e : weapon->content)
 			{
-				cout << "\n\tYou don't have a weapon to attack.";
-			}
-			else 
-			{
-				if (weapon == GetHoldingItem()) 
+				if (e != nullptr && e->GetType() == EntityType::ITEM && ((Item*)e)->GetItemType() == ItemType::BULLET)
 				{
-					if (enemy->IsDead()) 
+					enemy->Attack();
+					if (enemy->IsDead()==false)
 					{
-							cout << "\n\tThe " << enemy->GetName() <<"is dead.";
+						cout << "\tThe " << enemy->GetName() << "is dead.";
+						return true;
 					}
-					else
+					else 
 					{
-						enemy->Attack();
+						return false;
 					}
-				}
-					else
-					{
-						cout << "\n\tYou need to equip a weapon to attack.";
-					}	
 				}
 			}
+			cout << "\tYou need to insert ammo in the gun to attack.";	
+		}
+	}
+	return true;
+}
+
+void Player::InsertItem(const string& inItem, const string& onItem)
+{
+	Item* item01 = GetEntityName<Item>(inItem, content, EntityType::ITEM);
+	Item* item02 = GetEntityName<Item>(onItem, content, EntityType::ITEM);
+
+	if (item01 == nullptr) {
+		cout << "\tYou dont have enough items in your inventory";
+	}
+	else if (item02 == nullptr)
+	{
+		cout << "\tYou need one more item";
+	}
+	else if (item01->GetItemType() == ItemType::BULLET && item02->GetItemType() == ItemType::WEAPON)
+	{
+		item01->content.clear();
+		content.remove(item01);
+		item02->content.push_back(item01);
+		cout << "\tYou insert " << inItem << " inside  " <<onItem;
+	}
+	else
+	{
+		cout << "\tYou cant insert " << inItem << " inside " << onItem;
+	}
 }
 
 void Player::Unlock(const string& str) 
 {
-
 	if (IsPath(str)) 
 	{
-
 		Path* direction = SetPath(str);
 		Exit* exit = ExitPath(str);
 
 		if (exit == nullptr) 
 		{
-			cout << "\n\tThere is no exit in " << str << ".";
+			cout << "\tThere is no exit in " << str << ".";
 		}
 		else 
 		{
 			if (exit->IsLocked()) 
 			{
-				Item* key = GetTypeItem(ItemType::KEY);
+				Item* key = GetHoldingItem();
 
 				if (key == nullptr) 
 				{
-					cout << "\n\tYou don't have a key to unlock this path.";
+					cout << "\tYou don't have a key to unlock this path.";
 				}
 				else 
 				{
-	
-					if (key == GetHoldingItem() && key == exit->ExitKey())
+					if (key == exit->ExitKey())
 					{
-						cout << str << " unlocked.";
+						cout << "\t" << str << " unlocked.";
 						exit->SetExit(false);
 					}
 					else
 					{
-						cout << "\n\tYou are missing something important to open the path.";
+						cout << "\tYou are missing something important to open the path.";
 					}
 				}
 			}
 			else
 			{
-				cout << str << " is already unlocked!";
+				cout << "\t" << str << " is already unlocked!";
 			}
 		}
-
 	}
 	else 
 	{
-		cout << "\n\tCommand must be a path.";
+		cout << "\tCommand must be a path.";
 	}
 }
 
@@ -363,13 +396,10 @@ template <class T>
 T* Player::GetEntityName(const string& name, const list<Entity*>& entities, const EntityType type) const
 {
 	T* entity = nullptr;
-
-
-
-	for (Entity* e : entities) {
-		
-		if (e!=nullptr && e->GetType() == type) {
-
+	for (Entity* e : entities) 
+	{
+		if (e!=nullptr && e->GetType() == type) 
+		{
 			string entityName = Txt_to_low(e->GetName());
 			if (entityName == name) {
 				entity = (T*)e;
@@ -400,12 +430,11 @@ Item* Player::GetTypeItem(ItemType type) const
 Enemy* Player::GetEnemyFromCurrentRoom() const 
 {
 	Enemy* enemy = nullptr;
-
-
 	for (Entity* e : location->content) 
 	{
 
-		if (e != nullptr && e->GetType() == EntityType::ENEMY) {
+		if (e != nullptr && e->GetType() == EntityType::ENEMY) 
+		{
 			enemy = (Enemy*)e;
 			break;
 		}
