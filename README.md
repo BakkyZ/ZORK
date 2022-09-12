@@ -3,10 +3,10 @@ Hello! This is a Zork game created by Alejandro Matus for the online test for th
 If you want to see the project feel free to ingress to Github to see or download it.
 LINK: https://github.com/BakkyZ/ZORK.git
 
-- - How to play - -
+ - How to play
 The game is simple, to use the commands you cannot enter more than two entries except for the insert command which will allow you to enter three.
 
-- MENU -
+- MENU
 The first thing it shows is the menu that has multiple options:
 Play - Start the game - to access press "1".
 How Play - Brief explanation of the commands - to access press "2".
@@ -14,7 +14,7 @@ Information - Information about the game - to access press "3".
 Achievemenents - Here it shows the achievements that are obtained by playing - to access press "3".
 Quit - Option to exit the game - to access press "5".
 
-- THE GAME -
+- THE GAME
 When you start the game you will be positioned in a Path, to advance to anothers Paths you must find the correct keys to advance.
 The objects and the paths you can use/select are displayed in the screen.
 You must have the correct key Equipped to open the next path.
@@ -23,7 +23,7 @@ Whenever you want you can access the menu to see your options and return to play
 To use the weapon you must load it with bullets using the "insert" command.
 To see iside the game the commands you must go to the menu and go to How to Play.
 
-- ACTION COMMANDS -
+- ACTION COMMANDS
 Inventory - shows the items you have.
 Look      - describe the object you specify.
 Go        - move the player to a different path.
@@ -38,7 +38,7 @@ Exit/Quit - close the game. You will lose the progress"
 
 All commands are subject to what is requested being possible.
 
-- - HOW TO WIN THE GAME --
+ - HOW TO WIN THE GAME
 EJ: - Name Path - Acctions to do -
 - Press 1 in the menu to play
 - The Cell - Take Lockpick - Equip Lockpick - Open Corridor - Go Corridor
@@ -63,10 +63,10 @@ From here the game has two possibilities "Take the uniform and leave" or "kill t
 - The Gate - Open Outside - Go Outside
 - CONGRATS YOU WIN THE GAME!!!
 
-- - EXTRAS - - 
+ - EXTRAS
 Any time you Can go to Menu any time to check your Achievements.
 
-- - COPYRIGHT - -
+ - COPYRIGHT
 Link: https://choosealicense.com/licenses/gpl-3.0/
 
         GNU GENERAL PUBLIC LICENSE
